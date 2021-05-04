@@ -49,20 +49,16 @@ public class WebScraper {
             Elements telegraph = document.select("div#block-yui_3_17_2_1_1551316212180_29122");
             for (Element element: telegraph.select("div[class*=\"summary-item-has-excerpt\"]")) {
                 // final String date = element.select("span.summary-thumbnail-event-date-month").text();
+                //                final String date = element.select("span.summary-thumbnail-event-date-month").text() + " " +
+//                        element.select("span.summary-thumbnail-event-date-day").text();
+
                 String unfilteredToppings = element.select("div.summary-excerpt p").text();
                 String preToppingsInformation = element.select("div.summary-excerpt p strong").text();
-//                final String date = element.select("span.summary-thumbnail-event-date-month").text() + " " +
-//                        element.select("span.summary-thumbnail-event-date-day").text();
                 final String toppings = unfilteredToppings.replace(preToppingsInformation + " ", "");
-                System.out.println(unfilteredToppings);
-                System.out.println(preToppingsInformation);
                 System.out.println(toppings);
-                //toppings = toppings.substring(toppings.indexOf("pm"));
-                //System.out.println(toppings);
                 System.out.println("----------");
             }
 
-            // System.out.println(telegraph);
         } catch (IOException e) {
             e.printStackTrace();
         }
