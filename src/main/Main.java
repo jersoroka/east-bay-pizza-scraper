@@ -3,7 +3,8 @@ package main;
 public class Main {
 
     public static void main(String[] args) {
-        WebScraper.scrapeCheeseBoard();
+        WebScraper webScraper = new WebScraper();
+        webScraper.scrapeCheeseBoard();
     }
 
 }

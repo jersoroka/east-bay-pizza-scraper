@@ -8,8 +8,13 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class WebScraper {
+    private PizzaMenu cheeseBoard;
 
-    public static void scrapeCheeseBoard() {
+    public WebScraper() {
+        cheeseBoard = new PizzaMenu("CheeseBoard");
+    }
+
+    public void scrapeCheeseBoard() {
         final String url = "https://cheeseboardcollective.coop/pizza/";
 
         try {
@@ -21,12 +26,11 @@ public class WebScraper {
                 final String date = element.select("div.date").select("p").text();
                 final String fullPizzaText = element.select("div.menu p").text();
                 final String repeatedPizzaText = element.select("div p b i").text();
-                final String pizzaIngredients =  fullPizzaText.replace(repeatedPizzaText + " ", "");
+                final String toppings =  fullPizzaText.replace(repeatedPizzaText + " ", "");
 
                 System.out.println(date);
-                //System.out.println(fullPizzaText);
-                //System.out.println(repeatedPizzaText);
-                System.out.println(pizzaIngredients);
+                System.out.println(toppings);
+                cheeseBoard.addPizza(date, toppings);
             }
         } catch (IOException e) {
             e.printStackTrace();
