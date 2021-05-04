@@ -18,8 +18,10 @@ public class WebScraper {
             System.out.println(body);
 
             for (Element element: body.select("article")) {
-                final String date = element.select("div.date").text();
+                final String date = element.select("div.date").select("p").text();
+                final String pizza = element.select("div.menu").text();
                 System.out.println(date);
+                System.out.println(pizza);
             }
         } catch (IOException e) {
             e.printStackTrace();
