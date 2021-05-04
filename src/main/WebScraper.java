@@ -14,10 +14,12 @@ public class WebScraper {
 
         try {
             final Document document = Jsoup.connect(url).get();
-            Elements body = document.select("div.page-center-content");
+            Elements body = document.select("div.pizza-list");
+            System.out.println(body);
 
             for (Element element: body.select("article")) {
-
+                final String date = element.select("div.date").text();
+                System.out.println(date);
             }
         } catch (IOException e) {
             e.printStackTrace();
