@@ -75,5 +75,22 @@ public class WebScraper {
                 sliverTelegraph.addPizza(date, toppings);
             }
         }
+
+        telegraph.findElement(By.cssSelector("span[class=\"summary-carousel-pager-next next\"]")).click();
+        final WebElement telegraphClicked = driver.findElement(By.id("block-yui_3_17_2_1_1551316212180_29122"));
+        for (WebElement element: telegraph.findElements(By.cssSelector("div[class*=\"summary-item-has-excerpt\"]"))) {
+            if (element.getText().length() != 0) {
+                final String date = element.findElement(By.cssSelector("span.summary-thumbnail-event-date-month")).getText()
+                        + " " + element.findElement(By.cssSelector("span.summary-thumbnail-event-date-day")).getText();
+
+                List<WebElement> text = element.findElements(By.cssSelector("div.summary-excerpt p"));
+                final String toppings = text.get(2).getText();
+
+                System.out.println(date);
+                System.out.println(toppings);
+                System.out.println("----------");
+                sliverTelegraph.addPizza(date, toppings);
+            }
+        }
     }
 }
