@@ -12,11 +12,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 public class WebScraper {
     private PizzaMenu cheeseBoard;
     private PizzaMenu sliverTelegraph;
+    private WebDriver driver;
 
     public WebScraper() {
         cheeseBoard = new PizzaMenu("CheeseBoard");
@@ -54,29 +56,24 @@ public class WebScraper {
     public void scrapeSliver() {
         final String url = "https://www.sliverpizzeria.com/menu-weekly";
 
-        try {
-            final Document document = Jsoup.connect(url).get();
-            Elements telegraph = document.select("div#block-yui_3_17_2_1_1551316212180_29122");
-            for (Element element: telegraph.select("div[class*=\"summary-item-has-excerpt\"]")) {
-                final String date = element.select("span.summary-thumbnail-event-date-month").text() + " " +
-                        element.select("span.summary-thumbnail-event-date-day").text();
+        System.setProperty("webdriver.chrome.driver", "Resources/chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.get(url);
 
-                String unfilteredToppings = element.select("div.summary-excerpt p").text();
-                String preToppingsInformation = element.select("div.summary-excerpt p strong").text();
-                final String toppings = unfilteredToppings.replace(preToppingsInformation + " ", "");
+        final WebElement telegraph = driver.findElement(By.id("block-yui_3_17_2_1_1551316212180_29122"));
+        for (WebElement element: telegraph.findElements(By.cssSelector("div[class*=\"summary-item-has-excerpt\"]"))) {
+            if (element.getText().length() != 0) {
+                final String date = element.findElement(By.cssSelector("span.summary-thumbnail-event-date-month")).getText()
+                        + " " + element.findElement(By.cssSelector("span.summary-thumbnail-event-date-day")).getText();
+
+                List<WebElement> text = element.findElements(By.cssSelector("div.summary-excerpt p"));
+                final String toppings = text.get(2).getText();
+
                 System.out.println(date);
                 System.out.println(toppings);
                 System.out.println("----------");
                 sliverTelegraph.addPizza(date, toppings);
-
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
-
-    private void openBrowser() {
-
     }
 }
