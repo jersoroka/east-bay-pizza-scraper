@@ -10,7 +10,7 @@ They each both only offer one type of pizza each day, and these pizzas change fr
 * I want to learn more about web scraping
 
 # User Stories
-* As a user, I want to be notified at the beginning of each week the menu options for each restaurant.
+* As a user, I want to be notified at the beginning of the menu options for each restaurant.
 * As a user, I want to be notified by email.
 
 # Technologies
